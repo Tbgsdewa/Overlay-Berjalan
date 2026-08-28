@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Social Media & Ad Block Loop Ticker - Ferrari Edition (With Break)</title>
+  <style>
+    body { 
+      margin: 0; 
+      padding: 0; 
+      background: transparent; 
+      overflow: hidden; 
+    }
+    
+    /* Kanvas utama dengan transisi menghilang/muncul otomatis */
+    .ticker-wrapper {
+      width: 1920px;
+      height: 50px;
+      display: flex;
+      font-family: 'Arial', sans-serif;
+      font-weight: bold;
+      box-shadow: 0 -4px 10px rgba(0,0,0,0.3);
+      position: relative;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.6s ease, visibility 0.6s ease;
+    }
+
+    /* Memunculkan wrapper saat status aktif */
+    .ticker-wrapper.active-wrapper {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    /* Setiap Halaman Iklan / Medsos */
+    .ticker-slide {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.4s ease 0.6s, visibility 0.4s ease 0.6s;
+    }
+
+    /* Ketika halaman aktif/muncul */
+    .ticker-slide.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    /* 1. KOTAK KIRI: Latar Putih */
+    .block-left {
+      width: 800px; 
+      height: 100%;
+      background-color: #ffffff;
+      font-size: 22px;
+      display: flex;
+      align-items: center;
+      padding-left: 30px;
+      box-sizing: border-box;
+      flex-shrink: 0;
+    }
+
+    /* 2. KOTAK TENGAH: Latar Abu-abu */
+    .block-middle {
+      width: 150px; 
+      height: 100%;
+      background-color: #ececec; 
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-shrink: 0;
+    }
+
+    .ticker-icon {
+      height: 42px;
+      width: auto;
+      object-fit: contain;
+    }
+
+    /* 3. KOTAK KANAN: Latar Berwarna */
+    .block-right {
+      width: 970px; 
+      height: 100%;
+      font-size: 24px;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      padding-left: 40px;
+      box-sizing: border-box;
+      flex-shrink: 0;
+    }
+
+    /* === ANIMASI LINTASAN FERRARI MERAH ELEGAN === */
+    .race-track {
+      position: absolute;
+      width: 1920px;
+      height: 50px;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      z-index: 999; 
+      overflow: hidden;
+    }
+
+    .race-car {
+      position: absolute;
+      width: 150px; 
+      height: 40px;
+      top: 5px;
+      right: -160px; 
+      display: none;
+    }
+
+    /* Trigger Animasi JALAN ELEGAN */
+    .race-car.animate {
+      display: block;
+      animation: ferrariDrive 1.5s linear forwards; 
+    }
+
+    @keyframes ferrariDrive {
+      0% {
+        right: -160px;
+      }
+      100% {
+        right: 2100px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Area Mobil Ferrari Melesat -->
+  <div class="race-track">
+    <svg id="racingCar" class="race-car" viewBox="0 0 24 24">
+      <path fill="#E60000" d="M1 13.5c0-.8.4-1.6 1.1-2l4.5-2.2c.4-.2.9-.3 1.4-.3h6c1.1 0 2 .7 2.3 1.7l1.1 3.3c.3.8.9 1.5 1.7 1.8h1.9c1.1 0 2 .9 2 2v1c0 .6-.4 1-1 1h-21c-.6 0-1-.4-1-1v-4.5zm5 4.5c.8 0 1.5-.7 1.5-1.5s-.7-1.5-1.5-1.5-1.5.7-1.5 1.5.7 1.5 1.5 1.5zm12 0c.8 0 1.5-.7 1.5-1.5s-.7-1.5-1.5-1.5-1.5.7-1.5 1.5.7 1.5 1.5 1.5z"/>
+    </svg>
+  </div>
+
+  <!-- Menambahkan ID agar wrapper bisa dihilangkan saat masa delay -->
+  <div id="tickerWrapper" class="ticker-wrapper">
+    
+    <!-- SLIDE 1: INSTAGRAM -->
+    <div class="ticker-slide">
+      <div class="block-left" style="color: #E1306C;">Follow Instagram aku untuk info update terbaru</div>
+      <div class="block-middle">
+        <img src="ig.png" class="ticker-icon">
+      </div>
+      <div class="block-right" style="background-color: #E1306C;">@tbgsdewa</div>
+    </div>
+    
+    <!-- SLIDE 2: TIKTOK -->
+    <div class="ticker-slide">
+      <div class="block-left" style="color: #000000;">Jangan lupa follow dan pantau live TikTok aku</div>
+      <div class="block-middle">
+        <img src="tt.png" class="ticker-icon">
+      </div>
+      <div class="block-right" style="background-color: #000000;">@tbgsdewa @dearzka07</div>
+    </div>
+
+    <!-- SLIDE 3: FACEBOOK -->
+    <div class="ticker-slide">
+      <div class="block-left" style="color: #1877F2;">Add teman Facebook aku untuk mabar dan komunitas</div>
+      <div class="block-middle">
+        <img src="fb.png" class="ticker-icon">
+      </div>
+      <div class="block-right" style="background-color: #1877F2;">Tobagus Dewa</div>
+    </div>
+
+    <!-- SLIDE 4: YOUTUBE -->
+    <div class="ticker-slide">
+      <div class="block-left" style="color: #FF0000;">Subscribe channel YouTube aku untuk konten live streaming seru lainnya</div>
+      <div class="block-middle">
+        <img src="yt.png" class="ticker-icon" onerror="this.src='yt.jpg'; this.onerror=function(){this.src='yt.webp'}">
+      </div>
+      <div class="block-right" style="background-color: #FF0000;">@tbgsdewaofficial</div>
+    </div>
+    
+    <!-- SLIDE 5: TRADERSSNAKE (FOREX) -->
+    <div class="ticker-slide">
+      <div class="block-left" style="color: #27ae60;">Belajar Trading FOREX Lengkap dan Gratis 100% Profit</div>
+      <div class="block-middle">
+        <img src="logo1.jpg" class="ticker-icon" onerror="this.src='logo1.webp'">
+      </div>
+      <div class="block-right" style="background-color: #27ae60;">Traderssnake.com</div>
+    </div>
+    
+    <!-- SLIDE 6: GODOKU.ID (TOP UP) -->
+    <div class="ticker-slide">
+      <div class="block-left" style="color: #c0392b;">Tempat Top Up Game Termurah, Aman dan Terpercaya Se-Indonesia</div>
+      <div class="block-middle">
+        <img src="logo2.jpg" class="ticker-icon" onerror="this.src='logo2.webp'">
+      </div>
+      <div class="block-right" style="background-color: #c0392b;">Godoku.id</div>
+    </div>
+    
+    <!-- SLIDE 7: INDOCHESSCUP (CATUR) -->
+    <div class="ticker-slide">
+      <div class="block-left" style="color: #d4af37;">Belajar Catur Pemula Sampai Jadi Grandmaster Dalam Sekejap</div>
+      <div class="block-middle">
+        <img src="logo3.jpg" class="ticker-icon" onerror="this.src='logo3.webp'">
+      </div>
+      <div class="block-right" style="background-color: #d4af37;">Indochesscup.vercel.app</div>
+    </div>
+
+  </div>
+
+  <script>
+    const wrapper = document.getElementById('tickerWrapper');
+    const slides = document.querySelectorAll('.ticker-slide');
+    const racingCar = document.getElementById('racingCar');
+    
+    let currentSlide = 0;
+    let isRunning = false;
+
+    const DURASI_SLIDE = 6000;   // 6 detik tampil per produk
+    const WAKTU_DELAY  = 35000;  // JEDA TIDUR 35 DETIK setelah seluruh putaran habis
+
+    function startFullLoop() {
+      isRunning = true;
+      currentSlide = 0;
+      
+      // 1. Munculkan container utama secara mulus di layar
+      wrapper.classList.add('active-wrapper');
+      
+      // 2. Jalankan Ferrari untuk slide pertama
+      triggerCarAnimation();
+      slides[0].classList.add('active');
+
+      // 3. Mulai interval perputaran slide
+      const slideInterval = setInterval(() => {
+        if (!isRunning) {
+          clearInterval(slideInterval);
+          return;
+        }
+
+        // Jika ini adalah slide terakhir (Indochesscup), hentikan putaran untuk masuk masa istirahat
+        if (currentSlide === slides.length - 1) {
+          clearInterval(slideInterval);
+          endFullLoop();
+          return;
+        }
+
+        // Proses ganti ke slide berikutnya
+        triggerCarAnimation();
+        setTimeout(() => {
+          slides[currentSlide].classList.remove('active');
+          currentSlide++;
+          slides[currentSlide].classList.add('active');
+        }, 650);
+
+      }, DURASI_SLIDE);
+    }
+
+    function endFullLoop() {
+      isRunning = false;
+      // Sembunyikan container utama dari layar (menghilang mulus)
+      wrapper.classList.remove('active-wrapper');
+      
+      // Beri jeda sedikit lalu bersihkan status kelas aktif pada semua slide
+      setTimeout(() => {
+        slides.forEach(slide => slide.classList.remove('active'));
+      }, 600);
+
+      // Mulai hitung mundur masa istirahat selama 35 detik sebelum bangun dan mengulang
+      setTimeout(startFullLoop, WAKTU_DELAY);
+    }
+
+    function triggerCarAnimation() {
+      racingCar.classList.remove('animate');
+      void racingCar.offsetWidth; 
+      racingCar.classList.add('animate');
+    }
+
+    // Jalankan siklus loop pertama kali secara otomatis saat OBS menyala
+    startFullLoop();
+  </script>
+
+</body>
+</html>
